@@ -7,9 +7,9 @@ const config = {
 	kit: {
 		adapter: adapter(),
 		alias: {
-			$audio: 'src/audio'
-		}
-	}
+			$audio: 'src/audio',
+		},
+	},
 };
 
 export default config;
