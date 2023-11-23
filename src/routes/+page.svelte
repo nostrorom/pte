@@ -1,5 +1,6 @@
 <script lang="ts">
 	import MONK from '$lib/music/monk';
+	import KYOJAKU from '$lib/music/kyojaku';
 	import { playSong } from '$lib/player';
 </script>
 
@@ -15,9 +16,9 @@
 	<button
 		class="px-6 py-2 mx-auto rounded-lg bg-neutral-900 hover:bg-neutral-800"
 		on:click={() => {
-			playSong(MONK, 120);
+			playSong(KYOJAKU, 120);
 		}}
 	>
-		KIHON
+		KYOJAKU
 	</button>
 </div>
