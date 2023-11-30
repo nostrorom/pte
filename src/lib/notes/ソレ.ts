@@ -3,7 +3,7 @@ import type { Note, Channel } from '$lib/types';
 
 export const _buffer = await AUDIO.decodeAudioData(await (await fetch('/ソレ.wav')).arrayBuffer());
 
-const trim = 0.29;
+const trim = 0.28;
 
 const offset = Math.round(trim * _buffer.sampleRate);
 const length = _buffer.length - offset;
