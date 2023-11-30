@@ -1,15 +1,18 @@
-type Channel = 'R' | 'L';
-export type Channels = Record<Channel, 1 | 2>;
+import type { channels } from '$lib';
+export type Channel = keyof typeof channels;
 
-type Silence = { duration: number };
+type Silence = { type: 'silence'; duration: number };
 type Sound = {
-	source: AudioBufferSourceNode;
-	volume: number;
+	type: 'sound';
 	duration: number;
+	volume: number;
+	channel?: Channel;
+	createSource: () => AudioBufferSourceNode;
+	createGain?: () => GainNode;
 };
 export type Note =
-	| ((duration: number, volume: number, channel: Channel) => Sound)
-	| ((duration: number) => Silence);
+	| ((channel?: Channel, duration?: number, volume?: number) => Sound)
+	| ((duration?: number) => Silence);
 
 export type Phrase = (Sound | Silence)[];
 

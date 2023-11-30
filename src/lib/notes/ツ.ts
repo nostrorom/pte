@@ -1,17 +1,22 @@
-import { AUDIO, type Note } from '$lib';
+import { AUDIO } from '$lib/audio';
+import type { Note, Channel } from '$lib';
 
-const buffer = await AUDIO.decodeAudioData(await (await fetch('/ド.wav')).arrayBuffer());
+export const buffer = await AUDIO.decodeAudioData(await (await fetch('/ド.wav')).arrayBuffer());
 
-export default ((duration = 1, volume = 100, channel = 'R') => {
-	const source = AUDIO.createBufferSource();
+export default ((channel?: Channel, duration = 1, volume = 100) => {
+	function createSource() {
+		const source = AUDIO.createBufferSource();
 
-	console.log(channel);
+		source.buffer = buffer;
+		return source;
+	}
 
-	source.buffer = buffer;
-	const gain = AUDIO.createGain();
-	gain.gain.setValueAtTime(0.15, 0);
+	function createGain() {
+		const gain = AUDIO.createGain();
+		gain.gain.setValueAtTime(0.1, 0);
 
-	source.connect(gain);
+		return gain;
+	}
 
-	return { source, volume, duration };
+	return { createSource, createGain, volume, duration, channel, type: 'sound' as const };
 }) satisfies Note;

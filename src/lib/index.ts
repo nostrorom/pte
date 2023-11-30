@@ -1,33 +1,49 @@
-import type { Song, Channels } from '$lib/types';
+import type { Song } from '$lib/types';
+import { AUDIO, GAIN } from '$lib/audio';
+import { get, type Writable } from 'svelte/store';
 
-export const AUDIO = new AudioContext();
-export const GAIN = AUDIO.createGain();
 GAIN.connect(AUDIO.destination);
-export function play(s: Song, tempo: number) {
-	let time = 0;
+
+export const channels = {
+	R: 0.6,
+	L: -0.6,
+};
+
+export function play(
+	s: Song,
+	time: Writable<number>,
+	tempo: number,
+	sources: AudioBufferSourceNode[],
+) {
+	time.set(0.01);
 
 	s.flat(2).forEach((sound) => {
-		const { duration } = sound;
-		time += (duration / tempo) * 60;
+		if (sound.type === 'sound') {
+			const source = sound.createSource();
 
-		if (!('source' in sound && sound.source)) return;
+			const startTime = AUDIO.currentTime + get(time);
 
-		const startTime = AUDIO.currentTime + time;
-		const gain = AUDIO.createGain();
+			const gain = AUDIO.createGain();
+			gain.gain.setValueAtTime(sound.volume / 100, startTime);
+			gain.gain.exponentialRampToValueAtTime(0.001, Math.max(0, startTime - 0.01));
 
-		const { source, volume } = sound;
+			const PANNER = AUDIO.createStereoPanner();
 
-		gain.gain.setValueAtTime(volume / 100, startTime);
-		gain.gain.exponentialRampToValueAtTime(0.001, Math.max(0, startTime - 0.01));
-		source.connect(gain).connect(GAIN);
-		source.start(startTime);
+			PANNER.pan.value = sound.channel ? channels[sound.channel] : 0;
+
+			if (sound.createGain) {
+				source.connect(sound.createGain()).connect(gain).connect(PANNER).connect(GAIN);
+			} else {
+				source.connect(gain).connect(PANNER).connect(GAIN);
+			}
+
+			source.start(startTime);
+
+			sources.push(source);
+		}
+		time.set(get(time) + (sound.duration / tempo) * 60);
 	});
 }
-
-export const channels: Channels = {
-	R: 1,
-	L: 2,
-};
 
 export * from './types';
 export * from './notes';
