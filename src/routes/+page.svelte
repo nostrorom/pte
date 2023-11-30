@@ -47,6 +47,14 @@
 	>
 		KYOJAKU 2
 	</button>
+	<button
+		class="px-6 py-2 mx-auto rounded-lg bg-neutral-900 hover:bg-neutral-800"
+		on:click={() => {
+			play(KYOJAKU.part3, time, tempo + 30, sources);
+		}}
+	>
+		KYOJAKU 3
+	</button>
 	<button class="px-6 py-2 mx-auto rounded-lg bg-neutral-900 hover:bg-neutral-800" on:click={stop}>
 		■
 	</button>
