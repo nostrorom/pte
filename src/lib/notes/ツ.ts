@@ -18,5 +18,13 @@ export default ((channel?: Channel, duration = 1, volume = 100) => {
 		return gain;
 	}
 
-	return { createSource, createGain, volume, duration, channel, type: 'sound' as const };
+	return {
+		createSource,
+		createGain,
+		volume,
+		duration,
+		channel,
+		type: 'sound' as const,
+		name: 'ツ',
+	};
 }) satisfies Note;

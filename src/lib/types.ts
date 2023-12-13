@@ -1,12 +1,13 @@
 import type { channels } from '$lib';
 export type Channel = keyof typeof channels;
 
-type Silence = { type: 'silence'; duration: number };
-type Sound = {
+export type Silence = { type: 'silence'; duration: number };
+export type Sound = {
 	type: 'sound';
 	duration: number;
 	volume: number;
 	channel?: Channel;
+	name: string;
 	createSource: () => AudioBufferSourceNode;
 	createGain?: () => GainNode;
 };

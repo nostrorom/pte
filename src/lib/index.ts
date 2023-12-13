@@ -14,8 +14,11 @@ export function play(
 	time: Writable<number>,
 	tempo: number,
 	sources: AudioBufferSourceNode[],
+	playing: Writable<Part>,
 ) {
 	time.set(0.01);
+
+	playing.set(p);
 
 	p.flat(2).forEach((sound) => {
 		if (sound.type === 'sound') {
@@ -38,6 +41,10 @@ export function play(
 			}
 
 			source.start(startTime);
+
+			source.onended = () => {
+				console.log(sound.name ?? '_', AUDIO.currentTime);
+			};
 
 			sources.push(source);
 		}
