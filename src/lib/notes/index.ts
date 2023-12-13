@@ -4,4 +4,4 @@ export { default as ツ } from './ツ';
 export { default as ド } from './ド';
 export { default as ホ } from './ホ';
 export { default as ヨ } from './ヨ';
-export { default as _ } from './_';
+export { _, __, ___ } from './_';

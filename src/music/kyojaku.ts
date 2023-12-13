@@ -1,8 +1,5 @@
-import type { Song, Channel } from '$lib/types';
-import { カ, ソレ, ツ, ド, ホ, ヨ, _ as p } from '$lib';
-
-const __ = [p(2)];
-const ___ = [p(5)];
+import type { Song, Channel, Part } from '$lib/types';
+import { カ, ソレ, ツ, ド, ホ, ヨ, __, ___ } from '$lib';
 
 const r: Channel = 'R';
 const l: Channel = 'L';
@@ -17,7 +14,7 @@ const ツ_ド = [ツ(r, 0.5), ド(l, 0.5, 70)];
 
 const カ_ラ_カ = [カ(l, 0.5), カ(r, 0.5), カ(l, 0.5)];
 
-const part1: Song = [
+const part1: Part = [
 	// [ヨ_ホ],
 	// [[ド(r)], ツ_ク, ツ_ク, [ド(r, 1, 80), ド(r)], ツ_ク, ツ_ク, [ド(r, 1, 80)]],
 	// [[ド(r)], ツ_ク, ツ_ク, [ド(r, 1, 80), ド(r)], ツ_ク, ツ_ク, [ド(r, 1, 80)]],
@@ -49,7 +46,7 @@ const part1: Song = [
 	[ド_ツ_ク, ド_ツ_ク, ド_ツ_ク, [ド(r), ド(l)]],
 ];
 
-const part3: Song = [
+const part3: Part = [
 	[[ド(r)], ツ_ク, [ド(r)], ツ_ク, [ド(r, 0.5), ド(l, 0.5)], ツ_ク, [ド(r)], ツ_ク, ツ_ク, [ド(r)]],
 	[[ド(r)], ツ_ク, [ド(r)], ツ_ク, [ド(r, 0.5), ド(l, 0.5)], ツ_ク, [ド(r)]],
 	[ツ_ク, [ド(r)], ツ_ク, [ド(r)], ツ_ク, [ド(r, 0.5), ド(l, 0.5)], ツ_ク, [ド(r)]],
@@ -60,7 +57,7 @@ const part3: Song = [
 	[ツ_ク, [ド(r, 0.5, 120), ド(l, 0.5, 130)]],
 ];
 
-const part2: Song = [
+const part2: Part = [
 	[[ド(r, 0.5), ド(l, 0.5, 80), ド(r)]],
 	[
 		ツ_ド,
@@ -102,4 +99,4 @@ const part2: Song = [
 	...part3,
 ];
 
-export default { part1, part2, part3 };
+export const KYOJAKU: Song = { KYOJAKU: [part1, part2, part3] };

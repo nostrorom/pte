@@ -1,6 +1,6 @@
 <script lang="ts">
-	// import MONK from '../music/monk';
-	import KYOJAKU from '../music/kyojaku';
+	import { MONK } from '../music/monk';
+	import { KYOJAKU } from '../music/kyojaku';
 	import { play } from '$lib';
 	import { writable } from 'svelte/store';
 
@@ -31,30 +31,22 @@
 	>
 		MONK
 	</button> -->
-	<button
-		class="px-6 py-2 mx-auto rounded-lg bg-neutral-900 hover:bg-neutral-800"
-		on:click={() => {
-			play(KYOJAKU.part1, time, tempo, sources);
-		}}
-	>
-		KYOJAKU 1
-	</button>
-	<button
-		class="px-6 py-2 mx-auto rounded-lg bg-neutral-900 hover:bg-neutral-800"
-		on:click={() => {
-			play(KYOJAKU.part2, time, tempo + 30, sources);
-		}}
-	>
-		KYOJAKU 2
-	</button>
-	<button
-		class="px-6 py-2 mx-auto rounded-lg bg-neutral-900 hover:bg-neutral-800"
-		on:click={() => {
-			play(KYOJAKU.part3, time, tempo + 30, sources);
-		}}
-	>
-		KYOJAKU 3
-	</button>
+
+	{#each [KYOJAKU, MONK] as song}
+		{@const name = Object.keys(song)[0]}
+		{#each song[name] as part, i}
+			<button
+				class="px-6 py-2 mx-auto rounded-lg bg-neutral-900 hover:bg-neutral-800"
+				on:click={() => {
+					play(part, time, tempo + (i >= 1 ? 30 : 0), sources);
+				}}
+			>
+				{name}
+				{i + 1}
+			</button>
+		{/each}
+	{/each}
+
 	<button class="px-6 py-2 mx-auto rounded-lg bg-neutral-900 hover:bg-neutral-800" on:click={stop}>
 		■
 	</button>

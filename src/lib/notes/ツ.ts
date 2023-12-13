@@ -13,7 +13,7 @@ export default ((channel?: Channel, duration = 1, volume = 100) => {
 
 	function createGain() {
 		const gain = AUDIO.createGain();
-		gain.gain.setValueAtTime(0.1, 0);
+		gain.gain.setValueAtTime(0.2, 0);
 
 		return gain;
 	}

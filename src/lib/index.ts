@@ -1,23 +1,23 @@
-import type { Song } from '$lib/types';
+import type { Part } from '$lib/types';
 import { AUDIO, GAIN } from '$lib/audio';
 import { get, type Writable } from 'svelte/store';
 
 GAIN.connect(AUDIO.destination);
 
 export const channels = {
-	R: 0.6,
-	L: -0.6,
+	R: 0.45,
+	L: -0.45,
 };
 
 export function play(
-	s: Song,
+	p: Part,
 	time: Writable<number>,
 	tempo: number,
 	sources: AudioBufferSourceNode[],
 ) {
 	time.set(0.01);
 
-	s.flat(2).forEach((sound) => {
+	p.flat(2).forEach((sound) => {
 		if (sound.type === 'sound') {
 			const source = sound.createSource();
 
